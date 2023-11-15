@@ -6,25 +6,24 @@ function kruskal(graph) {
     for (let i = 0; i < graph.length; i++) {
         tree[i] = [];
     }
-    //Build a priority-queue-type-thing
-    let queue = [], cost = 0, index = 0;
+    //Build a priority queue
+    let queue = [];
     for (let i = 0; i < graph.length; i++) {
         for (let j = 0; j < graph[i].length; j++) {
-            if (queue[graph[i][j][1]] == undefined) {
-                queue[graph[i][j][1]] = [];
+            for (let qIndex = 0; qIndex <= queue.length; qIndex++) {
+                if (queue[qIndex] == undefined || graph[i][j][1] < queue[qIndex][2]) {
+                    queue.splice(qIndex, 0, [i, j, graph[i][j][1]]);  //[row, col, cost]
+                    break;
+                }
             }
-            queue[graph[i][j][1]].push([i, j]);
+            if (queue.length == 0) {
+                queue[0] = [i, j, graph[i][j][1]];
+            }
         }
     }
 
     //Add the minimum weight edge to T unless it forms a cycle
-    while (cost < queue.length - 1 || index < queue[cost].length) {
-        while (queue[cost] == undefined || index >= queue[cost].length) {
-            cost++;
-            index = 0;
-        }
-        let edge = queue[cost][index++];
-
+    for (edge of queue) {
         tree[edge[0]].push(graph[edge[0]][edge[1]]);
         if (hasCycle(tree)) {
             tree[edge[0]].splice(tree[edge[0]].length - 1, 1);

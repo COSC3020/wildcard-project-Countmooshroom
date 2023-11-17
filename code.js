@@ -10,17 +10,10 @@ function kruskal(graph) {
     let queue = [];
     for (let i = 0; i < graph.length; i++) {
         for (let j = 0; j < graph[i].length; j++) {
-            for (let qIndex = 0; qIndex <= queue.length; qIndex++) {
-                if (queue[qIndex] == undefined || graph[i][j][1] < queue[qIndex][2]) {
-                    queue.splice(qIndex, 0, [i, j, graph[i][j][1]]);  //[row, col, cost]
-                    break;
-                }
-            }
-            if (queue.length == 0) {
-                queue[0] = [i, j, graph[i][j][1]];
-            }
+            queue.push([i, j, graph[i][j][1]]);  //[row, col, cost]
         }
     }
+    mergesort(queue);
 
     //Add the minimum weight edge to T unless it forms a cycle
     for (edge of queue) {
@@ -30,6 +23,32 @@ function kruskal(graph) {
         }
     }
     return tree;
+}
+
+//Sorting function adapted from class notes
+function mergesort(x) {
+    var tmp = [];
+    msort(x, 0, x.length - 1, tmp);
+}
+function msort(x, lo, hi, tmp) {
+    if (lo >= hi) return;
+    var mid = Math.floor((lo + hi) / 2);
+    msort(x, lo, mid, tmp);
+    msort(x, mid + 1, hi, tmp);
+    merge(x, lo, mid, hi, tmp);
+}
+function merge(x, lo, mid, hi, tmp) {
+    var a = lo, b = mid + 1;
+    for (var k = lo; k <= hi; k++) {
+        if (a <= mid && (b > hi || x[a][2] < x[b][2])) {
+            tmp[k] = x[a++];
+        } else {
+            tmp[k] = x[b++];
+        }
+    }
+    for (var k = lo; k <= hi; k++) {
+        x[k] = tmp[k];
+    }
 }
 
 function hasCycle(graph) {

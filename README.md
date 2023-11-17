@@ -10,8 +10,8 @@ Implement Kruskal's algorithm, and find the worst-case time complexity.
 
 ## Runtime Analysis
 
-In the worst case, this algorithm will search through every edge and have bad cases with the detecting cycles function.  At the beginning of my program, it creates an empty tree of size $|V|$.  Then, it builds a priority-queue-type-thing that traverses every edge, so it takes $|E|$ time.  Next, it runs through a while loop that iterates over every edge from the queue ($|E|$).  Inside this loop, it takes the next item out of the priority queue.  This queue was built as an array, where the index of each set of edges is the edge length (For example, an edge of length 12 would be stored in queue[12]).  This means that the queue has length $H$, where $H$ is the longest edge, and will take $|H|$ total time to search through by the end of the program.  After that, it just does some linear stuff and also runs the hasCycle() funciton that I wrote for a different project, which had a time complexity of $|E| + |V|$.
+In the worst case, this algorithm will search through every edge and have bad cases with the detecting cycles function.  At the beginning of my program, it creates an empty tree of size $|V|$.  Then, it builds a priority queue that traverses every edge ($|E|$ time) and sorts the list with a mergesort ($|E|log|E|$ time).  After that, it runs the hasCycle() function for each edge (I originally wrote this function for a different project), which had a time complexity of $|E| + |V|$.
 
-Altogether, I believe this is a total complexity of $|V| + |E| + |H| + (|E| * (|E| + |V|))$.
+Altogether, I believe this is a total complexity of $|V| + |E| + |E|log|E| + (|E| * (|E| + |V|))$.
 
-This simplifies to $\Theta(|E|^2 + |E| |V| + |H|)$
+This simplifies to $\Theta(|E|^2 + (|E| * |V|))$

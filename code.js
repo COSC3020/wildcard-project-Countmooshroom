@@ -13,7 +13,7 @@ function kruskal(graph) {
             queue.push([i, j, graph[i][j][1]]);  //[row, col, cost]
         }
     }
-    mergesort(queue);
+    queue = queue.sort(function(a, b) { return a[2] - b[2]; });
 
     //Add the minimum weight edge to T unless it forms a cycle
     for (edge of queue) {

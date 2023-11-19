@@ -25,31 +25,6 @@ function kruskal(graph) {
     return tree;
 }
 
-//Sorting function adapted from class notes
-function mergesort(x) {
-    var tmp = [];
-    msort(x, 0, x.length - 1, tmp);
-}
-function msort(x, lo, hi, tmp) {
-    if (lo >= hi) return;
-    var mid = Math.floor((lo + hi) / 2);
-    msort(x, lo, mid, tmp);
-    msort(x, mid + 1, hi, tmp);
-    merge(x, lo, mid, hi, tmp);
-}
-function merge(x, lo, mid, hi, tmp) {
-    var a = lo, b = mid + 1;
-    for (var k = lo; k <= hi; k++) {
-        if (a <= mid && (b > hi || x[a][2] < x[b][2])) {
-            tmp[k] = x[a++];
-        } else {
-            tmp[k] = x[b++];
-        }
-    }
-    for (var k = lo; k <= hi; k++) {
-        x[k] = tmp[k];
-    }
-}
 
 function hasCycle(graph) {
     //Initialize Storage
